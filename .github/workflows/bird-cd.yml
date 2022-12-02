@@ -30,8 +30,8 @@ jobs:
     - name: Executing remote command
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.CD.HOST }}
-        USERNAME: ${{ secrets.CD.USERNAME }}
-        PORT: ${{ secrets.CD.PORT }}
-        KEY: ${{ secrets.CD.SSHKEY }}
+        host: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
         script: ls
