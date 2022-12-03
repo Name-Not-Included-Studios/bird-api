@@ -10,7 +10,7 @@ export class UserResolver {
   async getUsers(@Args() args: UserArgs /**/) {
     const session = neo4jDriver.session();
 
-    let response: User[] = [];
+    let response;
     console.log(args);
 
     /*
@@ -79,8 +79,16 @@ export class UserResolver {
     // run statement in a transaction
     const txc = session.beginTransaction();
     try {
-      const result1 = await txc.run(`match (n:User) return n`, {});
-      result1.records.forEach((r) => response.push(r.get("n")));
+      const result = await txc.run(`match (a:User) return a`, {});
+
+      console.log(JSON.stringify(result.records[0].get("a")));
+      // result.records.forEach((r) => response.push(r.get("n")));
+      JSON.stringify(
+        result.records.map((r) => {
+          response.push(r);
+        })
+      );
+
       console.log("First query completed");
 
       await txc.commit();
