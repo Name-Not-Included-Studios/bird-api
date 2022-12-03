@@ -21,10 +21,10 @@ export class User {
   bio: string;
 
   @Field()
-  isverified: boolean;
+  isVerified: boolean;
 
   @Field()
-  isadmin: boolean;
+  isAdmin: boolean;
 
   @Field()
   accEnabled: boolean;

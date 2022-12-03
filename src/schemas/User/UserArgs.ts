@@ -1,14 +1,44 @@
-import { Max, Min } from "class-validator";
-import { ArgsType, Field, Int } from "type-graphql";
+import { MaxLength } from "class-validator";
+import { ArgsType, Field } from "type-graphql";
 
 @ArgsType()
 export class UserArgs {
-  @Field(() => Int)
-  @Min(0)
-  skip: number = 0;
+  @Field()
+  @MaxLength(30)
+  id: string;
 
-  @Field(() => Int)
-  @Min(1)
-  @Max(50)
-  take: number = 25;
+  @Field()
+  @MaxLength(20)
+  username: string;
+
+  @Field()
+  @MaxLength(30)
+  displayName: string;
+
+  @Field()
+  joinDate: Date;
+
+  @Field({ nullable: true })
+  @MaxLength(120)
+  bio: string;
+
+  @Field()
+  isVerified: boolean;
+
+  @Field()
+  accEnabled: boolean;
+
+  @Field()
+  @MaxLength(120)
+  avatarUri: string;
+
+  // Below this is purely a "cache" so we don't hit the database with a search every time
+  @Field()
+  chirpCount: number;
+
+  @Field()
+  follows: number;
+
+  @Field()
+  following: number;
 }

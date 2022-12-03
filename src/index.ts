@@ -8,17 +8,10 @@ import { config } from "dotenv";
 
 config();
 
-/*
-Make type-graphql work with apollo
-*/
-
-const driver = neo4j.driver(
+export const neo4jDriver = neo4j.driver(
   "neo4j+s://df3863d2.databases.neo4j.io",
   neo4j.auth.basic("quaildev", process.env.NEO4J_PASSWORD || "")
 );
-
-// The ApolloServer constructor requires two parameters: your schema
-// definition and your set of resolvers.
 
 const main = async () => {
   const schema = await buildSchema({
@@ -37,3 +30,7 @@ const main = async () => {
 };
 
 main();
+
+process.on("exit", async () => {
+  await neo4jDriver.close();
+});
