@@ -79,10 +79,10 @@ export class UserResolver {
     // run statement in a transaction
     const txc = session.beginTransaction();
     try {
-      const result = await txc.run(`match (a:User) return a`, {});
+      const result = await txc.run(`match (u:User) return u`, {});
 
       result.records.map((r) => {
-        response.push(r.get("a"));
+        response.push(r.get("u"));
       });
 
       console.log("First query completed");
