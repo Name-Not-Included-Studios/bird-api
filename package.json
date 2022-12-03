@@ -1,0 +1,26 @@
+{
+  "name": "bird-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Name-Not-Included-Studios/bird-api",
+  "author": "ThatColdToast <72617136+ThatColdToast@users.noreply.github.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "tsnd --respawn src/index.ts"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.14",
+    "@types/node": "^18.11.10",
+    "dotenv": "^16.0.3",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.9.3"
+  },
+  "dependencies": {
+    "@apollo/server": "^4.2.2",
+    "class-validator": "^0.13.2",
+    "graphql": "^16.6.0",
+    "neo4j-driver": "^5.3.0",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^1.1.1"
+  }
+}
