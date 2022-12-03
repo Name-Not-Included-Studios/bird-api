@@ -1,7 +1,9 @@
+import { Args, Query, Resolver } from "type-graphql";
+
 import { neo4jDriver } from "../";
 import { User } from "../schemas/User/User";
-import { Args, Query, Resolver } from "type-graphql";
 import { UserArgs } from "../schemas/User/UserArgs";
+
 // import { Record } from "neo4j-driver";
 
 @Resolver(User)
