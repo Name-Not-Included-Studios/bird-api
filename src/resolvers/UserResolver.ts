@@ -83,11 +83,13 @@ export class UserResolver {
 
       // console.log(JSON.stringify(result.records[0].get("a")));
       // result.records.forEach((r) => response.push(r.get("n")));
-      JSON.stringify(
-        result.records.map((r) => {
-          response.push(JSON.stringify(r));
-        })
-      );
+      // JSON.stringify(
+      //   result.records.map((r) => {
+      //     response.push(JSON.stringify(r));
+      //   })
+      // );
+
+      console.log(result.records);
 
       console.log("First query completed");
 
