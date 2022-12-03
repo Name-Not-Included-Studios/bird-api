@@ -6,9 +6,11 @@ import { Record } from "neo4j-driver";
 
 @Resolver(User)
 export class UserResolver {
-  @Query(() => User)
-  async getUser(/*@Args() params: UserArgs /**/) {
+  @Query(() => [User])
+  async getUsers(/*@Args() params: UserArgs /**/) {
     const session = neo4jDriver.session();
+
+    let res: User[] = [];
 
     session.run("match (n:User) return n", {}).subscribe({
       onKeys: (/*keys: string[] /**/) => {
@@ -16,6 +18,7 @@ export class UserResolver {
       },
       onNext: (record: Record) => {
         const n = record.get("n");
+        res.push(n);
         console.log(n);
       },
       onCompleted: () => {
@@ -25,5 +28,9 @@ export class UserResolver {
         console.log(error);
       },
     });
+
+    console.log("RETURN");
+    console.log(res);
+    return res;
   }
 }
