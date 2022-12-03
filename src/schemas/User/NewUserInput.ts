@@ -4,8 +4,7 @@ import { Field, InputType } from "type-graphql";
 @InputType()
 export class NewUserInput {
   @Field()
-  @MaxLength(30)
-  id: string;
+  id: number;
 
   @Field()
   @MaxLength(20)

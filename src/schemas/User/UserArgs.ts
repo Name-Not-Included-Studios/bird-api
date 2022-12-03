@@ -4,8 +4,7 @@ import { ArgsType, Field } from "type-graphql";
 @ArgsType()
 export class UserArgs {
   @Field({ nullable: true })
-  @MaxLength(30)
-  id?: string;
+  id?: number;
 
   @Field({ nullable: true })
   @MaxLength(20)
