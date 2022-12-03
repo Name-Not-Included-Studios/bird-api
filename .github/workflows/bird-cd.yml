@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Test SSH
+      - name: Test SSH?
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
