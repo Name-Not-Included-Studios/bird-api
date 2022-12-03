@@ -20,7 +20,7 @@ jobs:
           script: |
             mkdir /var/www/thatcoldtoast
             cd /var/www/thatcoldtoast
-            git clone https://github.com/Name-Not-Included-Studios/bird-api.git
+            git pull
             cd ./bird-api
             yarn
             yarn dev
