@@ -32,7 +32,7 @@ export class NewUserInput {
   isAdmin: boolean;
 
   @Field()
-  accEnabled: boolean;
+  isEnabled: boolean;
 
   @Field()
   @MaxLength(120)

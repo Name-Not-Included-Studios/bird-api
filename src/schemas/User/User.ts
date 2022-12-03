@@ -27,7 +27,7 @@ export class User {
   isAdmin: boolean;
 
   @Field()
-  accEnabled: boolean;
+  isEnabled: boolean;
 
   @Field()
   avatarUri: string;

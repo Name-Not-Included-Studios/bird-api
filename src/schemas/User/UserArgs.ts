@@ -3,42 +3,42 @@ import { ArgsType, Field } from "type-graphql";
 
 @ArgsType()
 export class UserArgs {
-  @Field()
+  @Field({ nullable: true })
   @MaxLength(30)
   id: string;
 
-  @Field()
+  @Field({ nullable: true })
   @MaxLength(20)
   username: string;
 
-  @Field()
+  @Field({ nullable: true })
   @MaxLength(30)
   displayName: string;
 
-  @Field()
+  @Field({ nullable: true })
   joinDate: Date;
 
   @Field({ nullable: true })
   @MaxLength(120)
   bio: string;
 
-  @Field()
+  @Field({ nullable: true })
   isVerified: boolean;
 
-  @Field()
-  accEnabled: boolean;
+  @Field({ nullable: true })
+  isEnabled: boolean;
 
-  @Field()
+  @Field({ nullable: true })
   @MaxLength(120)
   avatarUri: string;
 
   // Below this is purely a "cache" so we don't hit the database with a search every time
-  @Field()
+  @Field({ nullable: true })
   chirpCount: number;
 
-  @Field()
+  @Field({ nullable: true })
   follows: number;
 
-  @Field()
+  @Field({ nullable: true })
   following: number;
 }
