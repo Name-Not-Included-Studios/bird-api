@@ -10,7 +10,7 @@ import { UserResolver } from './resolvers/UserResolver';
 
 config();
 
-let neo4jDriver: Driver = neo4j.driver(
+export const neo4jDriver: Driver = neo4j.driver(
 	process.env.NEO4J_URI || "",
 	neo4j.auth.basic(
 		process.env.NEO4J_USERNAME || "",
