@@ -9,8 +9,8 @@ import { config } from "dotenv";
 config();
 
 export const neo4jDriver = neo4j.driver(
-  "neo4j+s://df3863d2.databases.neo4j.io",
-  neo4j.auth.basic("quaildev", process.env.NEO4J_PASSWORD || "")
+  process.env.NEO4J_URI || "",
+  neo4j.auth.basic(process.env.NEO4J_USERNAME || "", process.env.NEO4J_PASSWORD || "")
 );
 
 const main = async () => {

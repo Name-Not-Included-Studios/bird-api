@@ -81,11 +81,11 @@ export class UserResolver {
     try {
       const result = await txc.run(`match (a:User) return a`, {});
 
-      console.log(JSON.stringify(result.records[0].get("a")));
+      // console.log(JSON.stringify(result.records[0].get("a")));
       // result.records.forEach((r) => response.push(r.get("n")));
       JSON.stringify(
         result.records.map((r) => {
-          response.push(r);
+          response.push(JSON.stringify(r));
         })
       );
 
