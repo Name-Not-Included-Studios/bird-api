@@ -19,8 +19,7 @@ jobs:
           key: ${{ secrets.SSHKEY }}
           script: |
             mkdir /var/www/thatcoldtoast
-            cd /var/www/thatcoldtoast
+            cd /var/www/thatcoldtoast/bird-api
             git pull
-            cd ./bird-api
             yarn
             yarn dev
