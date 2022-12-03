@@ -1,19 +1,21 @@
-import { neo4jDriver } from "../";
-import { User } from "../schemas/User/User";
-import { Args, Query, Resolver } from "type-graphql";
-import { UserArgs } from "../schemas/User/UserArgs";
+import { Args, Query, Resolver } from 'type-graphql';
+
+import { neo4jDriver } from '../';
+import { User } from '../schemas/User/User';
+import { UserArgs } from '../schemas/User/UserArgs';
+
 // import { Record } from "neo4j-driver";
 
 @Resolver(User)
 export class UserResolver {
-  @Query(() => [User])
-  async getUsers(@Args() args: UserArgs /**/) {
-    const session = neo4jDriver.session();
+	@Query(() => [User])
+	async getUsers(@Args() args: UserArgs /**/) {
+		const session = neo4jDriver.session();
 
-    let response: User[] = [];
-    console.log(args);
+		let response: User[] = [];
+		console.log(args);
 
-    /*
+		/*
       There are 3 ways of doing this:
         Subscribe Events
         The Promise Way
@@ -44,62 +46,62 @@ export class UserResolver {
         }
     */
 
-    // Subscribe Events
-    // session.run(`match (n:User {id: ${args.id}}) return n`, {}).subscribe({
-    //   onKeys: (/*keys: string[]*/) => {
-    //     // console.log(keys);
-    //   },
-    //   onNext: (record: Record) => {
-    //     const n = record.get("n");
-    //     response.push(n);
-    //     console.log(n);
-    //   },
-    //   onCompleted: () => {
-    //     session.close(); // returns a Promise
-    //   },
-    //   onError: (error) => {
-    //     console.log(error);
-    //   },
-    // });
+		// Subscribe Events
+		// session.run(`match (n:User {id: ${args.id}}) return n`, {}).subscribe({
+		//   onKeys: (/*keys: string[]*/) => {
+		//     // console.log(keys);
+		//   },
+		//   onNext: (record: Record) => {
+		//     const n = record.get("n");
+		//     response.push(n);
+		//     console.log(n);
+		//   },
+		//   onCompleted: () => {
+		//     session.close(); // returns a Promise
+		//   },
+		//   onError: (error) => {
+		//     console.log(error);
+		//   },
+		// });
 
-    // The Promise Way
-    // session
-    //   .run(`match (n:User) return n`, {})
-    //   .then((result) => {
-    //     result.records.forEach((record) => {
-    //       console.log(record.get("n"));
-    //       response.push(record.get("n"));
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   })
-    //   .then(() => session.close());
+		// The Promise Way
+		// session
+		//   .run(`match (n:User) return n`, {})
+		//   .then((result) => {
+		//     result.records.forEach((record) => {
+		//       console.log(record.get("n"));
+		//       response.push(record.get("n"));
+		//     });
+		//   })
+		//   .catch((error) => {
+		//     console.log(error);
+		//   })
+		//   .then(() => session.close());
 
-    // run statement in a transaction
-    const txc = session.beginTransaction();
-    try {
-      const result = await txc.run(`match (a:User) return a`, {});
+		// run statement in a transaction
+		const txc = session.beginTransaction();
+		try {
+			const result = await txc.run(`match (a:User) return a`, {});
 
-      result.records.map((r) => {
-        response.push(r.get("a"));
-      });
+			result.records.map((r) => {
+				response.push(r.get("a"));
+			});
 
-      console.log("First query completed");
+			console.log("First query completed");
 
-      await txc.commit();
-      console.log("committed");
-    } catch (error) {
-      console.log(error);
-      await txc.rollback();
-      console.log("rolled back");
-    } finally {
-      await session.close();
-    }
+			await txc.commit();
+			console.log("committed");
+		} catch (error) {
+			console.log(error);
+			await txc.rollback();
+			console.log("rolled back");
+		} finally {
+			await session.close();
+		}
 
-    // Just print and return the response
-    console.log("RETURN:");
-    console.log(response);
-    return response;
-  }
+		// Just print and return the response
+		console.log("RETURN:");
+		console.log(response);
+		return response;
+	}
 }
