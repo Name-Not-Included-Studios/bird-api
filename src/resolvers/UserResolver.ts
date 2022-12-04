@@ -24,7 +24,7 @@ export class UserResolver {
         ${args.displayName ? args.displayName : ""}
         ${args.joinDate ? args.joinDate : ""}
         ${args.isVerified ? args.isVerified : ""}
-      }}) return u`
+      }) return u`
       );
 
       await txc.commit();
