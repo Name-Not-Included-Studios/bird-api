@@ -12,20 +12,32 @@ export class UserResolver {
 
     let response: User[] = [];
 
+    console.log(args);
+
     // run cypher in a transaction
     const txc = session.beginTransaction();
 
+    let argsArray: string[] = [];
+
+    if (args.id != null) argsArray.push("u.id=" + args.id);
+    if (args.username != null) argsArray.push("u.username=" + args.username);
+    if (args.displayName != null) argsArray.push("u.displayName=" + args.displayName);
+    if (args.joinDate != null) argsArray.push("u.joinDate=" + args.joinDate);
+    if (args.isVerified != null) argsArray.push("u.isVerified=" + args.isVerified);
+
+    let argsCypher = argsArray.join(" and ");
+
+    const cypher = `
+    match (u:User)
+    where
+      ${argsCypher}
+    return u
+    `;
+
+    console.log(cypher);
+
     try {
-      const result = await txc.run<{ u: UserNode }>(
-        `
-      match (u:User {
-        ${args.id ? args.id : ""}
-        ${args.username ? args.username : ""}
-        ${args.displayName ? args.displayName : ""}
-        ${args.joinDate ? args.joinDate : ""}
-        ${args.isVerified ? args.isVerified : ""}
-      }) return u`
-      );
+      const result = await txc.run<{ u: UserNode }>(cypher);
 
       await txc.commit();
       console.log("committed");
