@@ -1,53 +1,40 @@
-import { MaxLength } from "class-validator";
+import { IsEmail, IsString, IsUrl, Length, MaxLength } from "class-validator";
 import { Field, InputType } from "type-graphql";
 
 @InputType()
 export class NewUserInput {
   @Field()
-  id: number;
-
-  @Field()
-  @MaxLength(20)
+  @IsString()
+  @Length(3, 20)
   username: string;
 
   @Field()
-  @MaxLength(30)
+  @IsString()
+  @IsEmail()
+  @MaxLength(64)
+  email: string;
+
+  @Field()
+  @IsString()
+  @Length(8, 64)
+  password: string;
+}
+
+@InputType()
+export class NewProfileInput {
+  @Field()
+  @IsString()
+  @Length(3, 30)
   displayName: string;
 
-  @Field()
-  password: string;
-
-  @Field()
-  joinDate: Date;
-
-  @Field({ nullable: true })
+  @Field({ defaultValue: "" })
+  @IsString()
   @MaxLength(120)
   bio: string;
 
   @Field()
-  isVerified: boolean;
-
-  @Field()
-  isAdmin: boolean;
-
-  @Field()
-  isEnabled: boolean;
-
-  @Field()
+  @IsString()
+  @IsUrl()
   @MaxLength(120)
   avatarUri: string;
-
-  // Below this is purely a "cache" so we don't hit the database with a search every time
-  @Field()
-  chirpCount: number;
-
-  @Field()
-  follows: number;
-
-  @Field()
-  following: number;
-
-  // @Field((type) => [String])
-  // @ArrayMaxSize(30)
-  // ingredients: string[];
 }
