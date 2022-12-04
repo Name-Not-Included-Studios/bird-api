@@ -4,12 +4,10 @@ import { neo4jDriver } from "../";
 import { User, UserNode } from "../schemas/User/User";
 import { UserArgs } from "../schemas/User/UserArgs";
 
-// import { Record } from "neo4j-driver";
-
 @Resolver(User)
 export class UserResolver {
   @Query(() => [User])
-  async getUsers(@Args() _args: UserArgs): Promise<User[]> {
+  async getUsers(@Args() args: UserArgs): Promise<User[]> {
     const session = neo4jDriver.session();
 
     let response: User[] = [];
@@ -18,13 +16,22 @@ export class UserResolver {
     const txc = session.beginTransaction();
 
     try {
-      const result = await txc.run<{ a: UserNode }>(`match (a:User) return a`);
+      const result = await txc.run<{ u: UserNode }>(
+        `
+      match (u:User {
+        ${args.id ? args.id : ""}
+        ${args.username ? args.username : ""}
+        ${args.displayName ? args.displayName : ""}
+        ${args.joinDate ? args.joinDate : ""}
+        ${args.isVerified ? args.isVerified : ""}
+      }}) return u`
+      );
 
       await txc.commit();
       console.log("committed");
 
       result.records.map((r) => {
-        response.push(r.get("a").properties);
+        response.push(r.get("u").properties);
       });
     } catch (error) {
       console.log(error);
