@@ -1,3 +1,4 @@
+import { GraphQLError } from "graphql";
 import { Args, Query, Resolver } from "type-graphql";
 
 import { neo4jDriver } from "../";
@@ -20,10 +21,14 @@ export class UserResolver {
     let argsArray: string[] = [];
 
     if (args.id != null) argsArray.push("u.id=" + args.id);
-    if (args.username != null) argsArray.push("u.username=" + args.username);
-    if (args.displayName != null) argsArray.push("u.displayName=" + args.displayName);
-    if (args.joinDate != null) argsArray.push("u.joinDate=" + args.joinDate);
+    if (args.username != null) argsArray.push('u.username="' + args.username + '"');
+    if (args.displayName != null) argsArray.push('u.displayName="' + args.displayName + '"');
+    if (args.joinDate != null) argsArray.push('u.joinDate="' + args.joinDate + '"');
     if (args.isVerified != null) argsArray.push("u.isVerified=" + args.isVerified);
+
+    console.log(argsArray.length);
+
+    if (argsArray.length <= 0) throw new GraphQLError("Must query with at least one parameter");
 
     let argsCypher = argsArray.join(" and ");
 
