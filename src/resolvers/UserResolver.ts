@@ -1,7 +1,7 @@
 import { Args, Query, Resolver } from 'type-graphql';
 
 import { neo4jDriver } from '../';
-import { User } from '../schemas/User/User';
+import { User, UserNode } from '../schemas/User/User';
 import { UserArgs } from '../schemas/User/UserArgs';
 
 // import { Record } from "neo4j-driver";
@@ -9,11 +9,10 @@ import { UserArgs } from '../schemas/User/UserArgs';
 @Resolver(User)
 export class UserResolver {
 	@Query(() => [User])
-	async getUsers(@Args() args: UserArgs /**/) {
+	async getUsers(@Args() _args: UserArgs /**/): Promise<User[]> {
 		const session = neo4jDriver.session();
 
 		let response: User[] = [];
-		console.log(args);
 
 		/*
       There are 3 ways of doing this:
@@ -80,17 +79,16 @@ export class UserResolver {
 
 		// run statement in a transaction
 		const txc = session.beginTransaction();
+
 		try {
-			const result = await txc.run(`match (a:User) return a`, {});
-
-			result.records.map((r) => {
-				response.push(r.get("a"));
-			});
-
-			console.log("First query completed");
+			const result = await txc.run<{ a: UserNode }>(`match (a:User) return a`);
 
 			await txc.commit();
 			console.log("committed");
+
+			result.records.map((r) => {
+				response.push(r.get("a").properties);
+			});
 		} catch (error) {
 			console.log(error);
 			await txc.rollback();
@@ -100,7 +98,7 @@ export class UserResolver {
 		}
 
 		// Just print and return the response
-		console.log("RETURN:");
+		// console.log("RETURN:");
 		console.log(response);
 		return response;
 	}

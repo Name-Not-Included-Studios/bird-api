@@ -1,44 +1,47 @@
-import { Field, ID, ObjectType } from "type-graphql";
+import { Integer, Node } from 'neo4j-driver';
+import { Field, ID, ObjectType } from 'type-graphql';
 
 @ObjectType()
 export class User {
-  @Field(() => ID)
-  id?: number;
+	@Field(() => ID)
+	id?: number;
 
-  @Field()
-  username: string;
+	@Field()
+	username: string;
 
-  @Field()
-  displayName: string;
+	@Field()
+	displayName: string;
 
-  @Field()
-  password: string;
+	@Field()
+	password: string;
 
-  @Field()
-  joinDate: Date;
+	@Field()
+	joinDate: Date;
 
-  @Field()
-  bio: string;
+	@Field()
+	bio: string;
 
-  @Field()
-  isVerified: boolean;
+	@Field()
+	isVerified: boolean;
 
-  @Field()
-  isAdmin: boolean;
+	@Field()
+	isAdmin: boolean;
 
-  @Field()
-  isEnabled: boolean;
+	@Field()
+	isEnabled: boolean;
 
-  @Field()
-  avatarUri: string;
+	@Field()
+	avatarUri: string;
 
-  // Below this is purely a "cache" so we don't hit the database with a search every time
-  @Field()
-  chirpCount: number;
+	// Below this is purely a "cache" so we don't hit the database with a search every time
+	@Field()
+	chirpCount: number;
 
-  @Field()
-  follows: number;
+	@Field()
+	follows: number;
 
-  @Field()
-  following: number;
+	@Field()
+	following: number;
 }
+
+export type UserNode = Node<Integer, User>;
