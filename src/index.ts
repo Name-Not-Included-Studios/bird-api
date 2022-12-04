@@ -15,17 +15,10 @@ export const neo4jDriver: Driver = neo4j.driver(
 	neo4j.auth.basic(
 		process.env.NEO4J_USERNAME || "",
 		process.env.NEO4J_PASSWORD || ""
-	),
-	{ connectionAcquisitionTimeout: 1000, connectionTimeout: 1000 }
+	)
 );
 
 const main = async () => {
-	// try {
-
-	// } catch (error) {
-	// 	console.error(error);
-	// }
-
 	const schema = await buildSchema({
 		resolvers: [UserResolver],
 	});
